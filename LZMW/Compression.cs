@@ -10,7 +10,6 @@ namespace LZMW
     {
 
         public Dictionary<string, int> dict;
-        int codeLen = 8;
 
         //public Compression()
         //{
@@ -24,114 +23,96 @@ namespace LZMW
             dict = DictInitialize.DictionaryInit();
         }
 
-        public List<int> Compress(string input)
+        public List<byte> Compress(string input)
         {
 
 
-            string SpS = null;
-            string S = null;
-            string Sp = null;
+            string matchConcatenation = null; // spoprzednie dopasowanie plus aktualne dopasowanie
+            string currentMatch = null; //aktualne dopasowanie
+            string previousMatch = null; //poprzednie dopasowanie
 
             
-            List<int> output = new List<int>();
+            List<byte> output = new List<byte>();
 
-            for (int i = 0; i < input.Length; i++)
+            for (int i = 0; i < input.Length; i += currentMatch.Length)
             {
+                string currentSign = null;
 
-                string c = input[i].ToString();
-                var matches = dict.Count(x => x.Key.Contains(c));
-                if(matches > 1)
+                currentSign = input[i].ToString();
+
+                int matches = dict.Count(x => x.Key.Contains(currentSign));
+
+                if (matches > 1 && i + 1 < input.Length)
                 {
-                    string cs = null;
-                    for (int j = i+1 ; j < matches ; j++)
+                    string signsConcatenation = null;
+
+                    
+                    for (int j = i + 1; j < input.Length; j++)
                     {
-                        cs = c + input[j];
-                        var match = dict.Count(x => x.Key.Contains(cs));
+                        signsConcatenation = currentSign + input[j];
+                        int match = dict.Count(x => x.Key.Contains(signsConcatenation));
+
                         if (match == 1)
                         {
-                            S = cs;
-                            output.Add(dict[S]);
+                            if (dict.Any(x => string.Compare(x.Key, signsConcatenation, StringComparison.OrdinalIgnoreCase) == 0))
+                            {
+                                currentMatch = signsConcatenation;
+                                output.Add((byte)dict[currentMatch]);
+                                break;
+                            }
+                            else
+                            {
+                                currentMatch = currentSign;
+                                output.Add((byte)dict[currentMatch]);
+                                break;
+                            }
 
                         }
                         else if (match > 1)
                         {
-                            c = cs;
+                            currentSign = signsConcatenation;
                             continue;
                         }
                         else if (match == 0)
                         {
-                            S = c;
-                            output.Add(dict[S]);
+                            currentMatch = currentSign;
+                            output.Add((byte)dict[currentMatch]);
+                            break;
                         }
-                        
+
                     }
 
                 }
                 else
                 {
-
-                    S = c;
-                    output.Add(dict[S]);
+                    currentMatch = currentSign;
+                    output.Add((byte)dict[currentMatch]);
                 }
 
-                SpS = S + Sp;
+                matchConcatenation = previousMatch + currentMatch;
 
-                if (dict.ContainsKey(SpS))
+
+                if (!dict.ContainsKey(matchConcatenation))
                 {
 
-                    dict.Add(SpS, dict.Count());
-                    Sp = S;
+                    dict.Add(matchConcatenation, dict.Count());
+                    previousMatch = currentMatch;
 
                 }
                 else
                 {
 
-                    Sp = S;
+                    previousMatch = currentMatch;
                 }
 
-              
+
             }
 
             return output;
 
-
-            //StringBuilder sb = new StringBuilder();
-            //int i = 0;
-            //string w = "";
-            //while (i < input.Length)
-            //{
-            //    w = input[i].ToString();
-
-            //    i++;
-
-            //    while (dict.ContainsKey(w) && i < input.Length)
-            //    {
-            //        w += input[i];
-            //        i++;
-            //    }
-
-            //    if (dict.ContainsKey(w) == false)
-            //    {
-            //        string matchKey = w.Substring(0, w.Length - 1);
-            //        sb.Append(Convert.ToString(dict[matchKey], 2).FillWithZero(codeLen));
-
-            //        if (Convert.ToString(dict.Count, 2).Length > codeLen)
-            //            codeLen++;
-
-            //        dict.Add(w, dict.Count);
-            //        i--;
-            //    }
-            //    else
-            //    {
-            //        sb.Append(Convert.ToString(dict[w], 2).FillWithZero(codeLen));
-
-            //        if (Convert.ToString(dict.Count, 2).Length > codeLen)
-            //            codeLen++;
-
-            //    }
         }
 
-       
+
 
 
     }

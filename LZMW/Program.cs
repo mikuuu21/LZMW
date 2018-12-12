@@ -18,8 +18,12 @@ namespace LZMW
             var text = ReadFromFile.FileReader(path);
 
             Compression encoder = new Compression();
-            encoder.Compress(text);
-            
+
+            List<byte> compressed = encoder.Compress(text);
+
+
+            Decompression decoder = new Decompression();
+            var decompressed = decoder.Decompress(compressed);
 
 
             Console.WriteLine();

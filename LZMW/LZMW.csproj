@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Compression.cs" />
     <Compile Include="CustomExceptions.cs" />
+    <Compile Include="Decompression.cs" />
     <Compile Include="DictInitialize.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
