@@ -14,19 +14,22 @@ namespace LZMW
 
 
             string path = @"input.txt";
+            
 
             var text = ReadFromFile.FileReader(path);
 
             Compression encoder = new Compression();
 
-            List<byte> compressed = encoder.Compress(text);
+            List<int> compressed = encoder.Compress(text);
 
 
             Decompression decoder = new Decompression();
             var decompressed = decoder.Decompress(compressed);
 
-
-            Console.WriteLine();
+            bool compare = String.Compare(text, decompressed, StringComparison.Ordinal) == 0;
+            Console.WriteLine(text);
+            Console.WriteLine("before: " + text.Count() + " after: " + compressed.Count());
+            Console.WriteLine(text + " = " + decompressed + " " + compare);
             Console.ReadLine();
 
 
