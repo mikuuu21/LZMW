@@ -81,14 +81,14 @@ namespace LZMW
 
                     for (int j = i + 1; j < input.Length; j++)
                     {
-                        int match = 0;
+                        //int match = 0;
 
                         signsConcatenation = currentSign + input[j];
 
-                        if ((dict.Any(x => string.Compare(x.Key, signsConcatenation, StringComparison.Ordinal) == 0)))
-                        {
-                             match = dict.Count(x => x.Key.Contains(signsConcatenation));
-                        }
+                        //if ((dict.Any(x => string.Compare(x.Key, signsConcatenation, StringComparison.Ordinal) == 0)))
+                        //{
+                             int match = dict.Count(x => x.Key.Contains(signsConcatenation));
+                        //}
 
 
                         if (match == 1 || match == 0)
@@ -99,26 +99,26 @@ namespace LZMW
                                 output.Add(dict[currentMatch]);
                                 break;
                             }
-                            else /*if (dict.Any(x => string.Compare(x.Key, currentSign, StringComparison.Ordinal) == 0))*/
+                            else if (dict.Any(x => string.Compare(x.Key, currentSign, StringComparison.Ordinal) == 0))
                             {
                                 currentMatch = currentSign;
                                 output.Add(dict[currentMatch]);
                                 break;
                             }
-                            //else
-                            //{
-                            //    for (int z = currentSign.Length -1;z == 0 ;z--)
-                            //    {
-                            //        currentMatch = currentSign.Remove(z);
-                            //        if (dict.Any(x => string.Compare(x.Key, currentMatch, StringComparison.Ordinal) == 0))
-                            //        {
-                            //            output.Add(dict[currentMatch]);
-                            //            break;
+                            else
+                            {
+                                for (int z = currentSign.Length - 1; z == 0; z--)
+                                {
+                                    currentMatch = currentSign.Remove(z);
+                                    if (dict.Any(x => string.Compare(x.Key, currentMatch, StringComparison.Ordinal) == 0))
+                                    {
+                                        output.Add(dict[currentMatch]);
+                                        break;
 
-                            //        }
-                            //    }
+                                    }
+                                }
 
-                            //}
+                            }
 
                         }
                         else if (match > 1)
@@ -127,13 +127,13 @@ namespace LZMW
                             continue;
                         }
 
-                        else if (match == 0)
-                        {
+                        //else if (match == 0)
+                        //{
                             //if (dict.Any(x => string.Compare(x.Key, currentSign, StringComparison.Ordinal) == 0))
                             //{
-                                currentMatch = currentSign;
-                                output.Add(dict[currentMatch]);
-                                break;
+                                //currentMatch = currentSign;
+                                //output.Add(dict[currentMatch]);
+                                //break;
                             //}
                             //else
                             //{
@@ -151,7 +151,7 @@ namespace LZMW
                             //}
 
 
-                        }
+                        //}
 
                     }
 
