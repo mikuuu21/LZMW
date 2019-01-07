@@ -59,11 +59,6 @@ namespace LZMW
             string previousMatch = null; //poprzednie dopasowanie
 
 
-            //for (var i = 0; i < 256; i++)
-            //{
-            //    var e = new List<byte> { (byte)i };
-            //   // dictionary.Add(i, e);
-            //}
             List<int> output = new List<int>();
 
             for (int i = 0; i < input.Length; i += currentMatch.Length)
@@ -81,14 +76,11 @@ namespace LZMW
 
                     for (int j = i + 1; j < input.Length; j++)
                     {
-                        //int match = 0;
 
                         signsConcatenation = currentSign + input[j];
 
-                        //if ((dict.Any(x => string.Compare(x.Key, signsConcatenation, StringComparison.Ordinal) == 0)))
-                        //{
                              int match = dict.Count(x => x.Key.Contains(signsConcatenation));
-                        //}
+
 
 
                         if (match == 1 || match == 0)
@@ -126,32 +118,6 @@ namespace LZMW
                             currentSign = signsConcatenation;
                             continue;
                         }
-
-                        //else if (match == 0)
-                        //{
-                            //if (dict.Any(x => string.Compare(x.Key, currentSign, StringComparison.Ordinal) == 0))
-                            //{
-                                //currentMatch = currentSign;
-                                //output.Add(dict[currentMatch]);
-                                //break;
-                            //}
-                            //else
-                            //{
-                            //    for (int z = currentSign.Length - 1; z == 0; z--)
-                            //    {
-                            //        currentMatch = currentSign.Remove(z);
-                            //        if (dict.Any(x => string.Compare(x.Key, currentMatch, StringComparison.Ordinal) == 0))
-                            //        {
-                            //            output.Add(dict[currentMatch]);
-                            //            break;
-
-                            //        }
-
-                            //    }
-                            //}
-
-
-                        //}
 
                     }
 

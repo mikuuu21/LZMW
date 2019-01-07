@@ -60,5 +60,19 @@ namespace LZMW
             return dict;
 
         }
+
+        public static Dictionary<int,int> ByteDict()
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+
+            for (int i = 0; i < 256; i++)
+            {
+                dict.Add((byte)i, i);
+                // dict.Add(System.Text.Encoding.Default.GetString(new byte[1] { Convert.ToByte(i) }), i);
+            }
+
+            return dict;
+
+        }
     }
 }

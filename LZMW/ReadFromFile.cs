@@ -16,8 +16,8 @@ namespace LZMW
 
             //string input = File.ReadAllText(path, ASCIIEncoding.Default);
             byte[] input = File.ReadAllBytes(path);
-            var str = System.Text.Encoding.ASCII.GetString(input);
-
+            var inp = Convert.ToBase64String(input);
+            // var str = System.Text.Encoding.ASCII.GetString(input);
             if (input.Count() == 0)
             {
                 throw new CustomExceptions("Plik nie zawiera żadnych znaków");
@@ -26,7 +26,7 @@ namespace LZMW
 
 
 
-            return str;
+            return inp;
 
 
 

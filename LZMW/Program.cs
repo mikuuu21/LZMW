@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace LZMW
 
 
 
-            string path = @"input.txt";
+            string path = @"indeks.jpg";
             
 
             var text = ReadFromFile.FileReader(path);
@@ -29,7 +30,11 @@ namespace LZMW
             bool compare = String.Compare(text, decompressed, StringComparison.Ordinal) == 0;
             Console.WriteLine(text);
             Console.WriteLine("before: " + text.Count() + " after: " + compressed.Count());
-            Console.WriteLine(text + " = " + decompressed + " " + compare);
+            Console.WriteLine(decompressed + " " + compare);
+            //byte[] data = Convert.FromBase64String(decompressed);
+            //File.WriteAllBytes(@"C:\Users\miku\Desktop\wynik.jpg", data);
+            //string decodedString = Encoding.UTF8.GetString(data);
+           // File.WriteAllText(@"c:\folder\file.txt", decodedString);
             Console.ReadLine();
 
 
