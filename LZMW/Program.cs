@@ -14,7 +14,7 @@ namespace LZMW
 
 
 
-            string path = @"indeks.jpg";
+            string path = @"input1.txt";
             
 
             var text = ReadFromFile.FileReader(path);
